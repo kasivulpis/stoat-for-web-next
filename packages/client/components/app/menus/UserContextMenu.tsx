@@ -25,6 +25,7 @@ import MdMicOff from "@material-design-icons/svg/outlined/mic_off.svg?component-
 import MdPersonAddAlt from "@material-design-icons/svg/outlined/person_add_alt.svg?component-solid";
 import MdPersonRemove from "@material-design-icons/svg/outlined/person_remove.svg?component-solid";
 import MdReport from "@material-design-icons/svg/outlined/report.svg?component-solid";
+import MdCopy from "@material-design-icons/svg/outlined/content_copy.svg?component-solid";
 
 import MdChecked from "@material-symbols/svg-400/outlined/check_box.svg?component-solid";
 import MdUnchecked from "@material-symbols/svg-400/outlined/check_box_outline_blank.svg?component-solid";
@@ -187,6 +188,14 @@ export function UserContextMenu(props: {
    */
   function copyId() {
     navigator.clipboard.writeText(props.user.id);
+  }
+
+
+  /**
+   * Copy username to clipboard
+   */
+  function copyUsername() {
+    navigator.clipboard.writeText(`${props.user.username}#${props.user.discriminator}`);
   }
 
   return (
@@ -386,6 +395,10 @@ export function UserContextMenu(props: {
           </ContextMenuButton>
         </Show>
       </Show>
+
+      <ContextMenuButton icon={MdCopy} onClick={copyUsername}>
+        <Trans>Copy Username</Trans>
+      </ContextMenuButton>
 
       <Show
         when={
