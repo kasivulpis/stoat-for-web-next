@@ -88,5 +88,5 @@ export default {
   /**
    * Whether or not to show the invite field in the account creation form.
    */
-  INVITE_ONLY: import.meta.env.INVITE_ONLY as string
+  INVITE_ONLY: import.meta.env.VITE_INVITE_ONLY as string
 };
