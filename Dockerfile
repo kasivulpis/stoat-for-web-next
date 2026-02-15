@@ -27,8 +27,10 @@ WORKDIR /app
 
 ARG STOATCHAT_WEB_REF=main
 ARG CACHE_BUST=1
-RUN git clone --branch ${STOATCHAT_WEB_REF} --recurse-submodules \
-    https://github.com/LordGuenni/for-web.git .
+# RUN git clone --branch ${STOATCHAT_WEB_REF} --recurse-submodules \
+#     https://github.com/LordGuenni/for-web.git .
+COPY . .
+RUN git submodule init && git submodule update
 # Assets submodule uses SSH in .gitmodules; clone via HTTPS separately
 RUN rm -rf packages/client/assets && \
     git clone --depth 1 https://github.com/stoatchat/assets.git packages/client/assets
