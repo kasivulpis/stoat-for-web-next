@@ -34,6 +34,7 @@ RUN rm -rf packages/client/assets && \
     git clone --depth 1 https://github.com/stoatchat/assets.git packages/client/assets
 
 # Placeholders replaced at runtime by entrypoint.sh
+ENV VITE_INVITE_ONLY=__VITE_INVITE_ONLY__
 ENV VITE_API_URL=__VITE_API_URL__
 ENV VITE_WS_URL=__VITE_WS_URL__
 ENV VITE_MEDIA_URL=__VITE_MEDIA_URL__

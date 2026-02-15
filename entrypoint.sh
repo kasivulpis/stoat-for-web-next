@@ -8,6 +8,7 @@ VITE_MEDIA_URL="${VITE_MEDIA_URL:-${REVOLT_PUBLIC_URL%%/api*}/autumn}"
 VITE_PROXY_URL="${VITE_PROXY_URL:-${REVOLT_PUBLIC_URL%%/api*}/january}"
 
 find /usr/share/nginx/html -name "*.js" -exec sed -i \
+    -e "s|__VITE_INVITE_ONLY__|${VITE_INVITE_ONLY}|g" \
     -e "s|__VITE_API_URL__|${REVOLT_PUBLIC_URL}|g" \
     -e "s|__VITE_WS_URL__|${VITE_WS_URL}|g" \
     -e "s|__VITE_MEDIA_URL__|${VITE_MEDIA_URL}|g" \
