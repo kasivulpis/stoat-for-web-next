@@ -85,4 +85,8 @@ export default {
   DEVELOPMENT_USER_ID: import.meta.env.DEV
     ? (import.meta.env.VITE_USER_ID as string)
     : undefined,
+  /**
+   * Whether or not to show the invite field in the account creation form.
+   */
+  INVITE_ONLY: import.meta.env.INVITE_ONLY as string
 };
