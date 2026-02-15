@@ -14,8 +14,8 @@ import { setFlowCheckEmail } from "./FlowCheck";
 import { Field, Fields, Form } from "./Form";
 
 const finalFields : Field[] = CONFIGURATION.INVITE_ONLY 
-  ? ["email", "password"]
-  : ["email", "password", "invite"];
+  ? ["email", "password", "invite"]
+  : ["email", "password"];
 
 const navigateOnSuccess = CONFIGURATION.INVITE_ONLY
   ? "/login"
