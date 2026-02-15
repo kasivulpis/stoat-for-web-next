@@ -17,6 +17,10 @@ const finalFields : Field[] = CONFIGURATION.INVITE_ONLY
   ? ["email", "password"]
   : ["email", "password", "invite"];
 
+const navigateOnSuccess = CONFIGURATION.INVITE_ONLY
+  ? "/login"
+  : "/login/check";
+
 /**
  * Flow for creating a new account
  */
@@ -46,7 +50,7 @@ export default function FlowCreate() {
     // TODO: log straight in if no email confirmation?
 
     setFlowCheckEmail(email);
-    navigate("/login/check", { replace: true });
+    navigate(navigateOnSuccess, { replace: true });
   }
 
   return (
