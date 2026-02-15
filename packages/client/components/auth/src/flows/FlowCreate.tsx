@@ -7,10 +7,15 @@ import { Button, Row, iconSize } from "@revolt/ui";
 import MdArrowBack from "@material-design-icons/svg/filled/arrow_back.svg?component-solid";
 
 import { useApi } from "../../../client";
+import { API } from 'stoat.js';
 
 import { FlowTitle } from "./Flow";
 import { setFlowCheckEmail } from "./FlowCheck";
-import { Fields, Form } from "./Form";
+import { Field, Fields, Form } from "./Form";
+
+const finalFields : Field[] = CONFIGURATION.INVITE_ONLY 
+  ? ["email", "password"]
+  : ["email", "password", "invite"];
 
 /**
  * Flow for creating a new account
@@ -27,12 +32,13 @@ export default function FlowCreate() {
     const email = data.get("email") as string;
     const password = data.get("password") as string;
     const captcha = data.get("captcha") as string;
+    const body : API.DataCreateAccount = { email, password, captcha };
 
-    await api.post("/auth/account/create", {
-      email,
-      password,
-      captcha,
-    });
+    if (CONFIGURATION.INVITE_ONLY) {
+      body.invite = data.get("invite") as string;
+    }
+  
+    await api.post("/auth/account/create", body);
 
     // FIXME: should tell client if email was sent
     //        or if email even needs to be confirmed
@@ -49,7 +55,7 @@ export default function FlowCreate() {
         <Trans>Hello!</Trans>
       </FlowTitle>
       <Form onSubmit={create} captcha={CONFIGURATION.HCAPTCHA_SITEKEY}>
-        <Fields fields={["email", "password"]} />
+        <Fields fields={finalFields} />
         <Row justify>
           <a href="..">
             <Button variant="text">
