@@ -33,6 +33,7 @@ import {
   typography,
 } from "@revolt/ui";
 import { VoiceChannelPreview } from "@revolt/ui/components/features/voice/VoiceChannelPreview";
+import { PersistentVoiceControls } from "@revolt/ui/components/features/voice/PersistentVoiceControls";
 import { createDragHandle } from "@revolt/ui/components/utils/Draggable";
 import { Symbol } from "@revolt/ui/components/utils/Symbol";
 
@@ -91,6 +92,7 @@ type OrderingEvent =
  */
 export const ServerSidebar = (props: Props) => {
   const navigate = useNavigate();
+  const state = useState();
 
   // Users can manage certain parts of the server individually, regardless of their ManageServer Permission
   const canManageServer = () =>
@@ -248,6 +250,7 @@ export const ServerSidebar = (props: Props) => {
           )}
         </Draggable>
       </div>
+      <PersistentVoiceControls />
     </SidebarBase>
   );
 };

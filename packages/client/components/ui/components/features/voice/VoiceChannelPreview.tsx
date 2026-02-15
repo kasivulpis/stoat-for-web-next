@@ -1,4 +1,4 @@
-import { For, Show, splitProps } from "solid-js";
+import { For, JSX, Show, splitProps } from "solid-js";
 import {
   TrackLoop,
   useEnsureParticipant,
@@ -32,39 +32,42 @@ export function VoiceChannelPreview(props: { channel: Channel }) {
       channelId={props.channel.id}
       fallback={<VariantPreview channel={props.channel} />}
     >
-      <VariantLive />
+      {/* When in room, show live participants, but also fall back to preview if no tracks */}
+      <VariantLive fallback={<VariantPreview channel={props.channel} />} />
     </InRoom>
   );
 }
 
 /**
- * Use API as the source of truth
+ * Use API as the source of truth when connected
  */
-function VariantLive() {
+function VariantLive(props: { fallback?: JSX.Element }) {
   const tracks = useTracks(
     [{ source: Track.Source.Camera, withPlaceholder: true }],
     { onlySubscribed: false },
   );
 
   return (
-    <Base>
-      <TrackLoop tracks={tracks}>{() => <ParticipantLive />}</TrackLoop>
-    </Base>
+    <Show when={tracks().length > 0} fallback={props.fallback}>
+      <Base>
+        <TrackLoop tracks={tracks}>{() => <ParticipantLive />}</TrackLoop>
+      </Base>
+    </Show>
   );
 }
 
 /**
- * Use LiveKit as the source of truth
+ * Use API as the source of truth when not connected
  */
 function VariantPreview(props: { channel: Channel }) {
+  const participants = () => [...props.channel.voiceParticipants.values()];
+  
   return (
-    <Show when={props.channel.voiceParticipants.size}>
-      <Base>
-        <For each={[...props.channel.voiceParticipants.values()]}>
-          {(participant) => <ParticipantPreview participant={participant} />}
-        </For>
-      </Base>
-    </Show>
+    <Base>
+      <For each={participants()}>
+        {(participant) => <ParticipantPreview participant={participant} />}
+      </For>
+    </Base>
   );
 }
 
