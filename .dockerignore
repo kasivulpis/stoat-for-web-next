@@ -1,4 +1,5 @@
-# Should always be the same as .gitignore
+# SECTION .GITIGNORE
+# NOTE Should always be the same as .gitignore
 node_modules
 coverage
 dist
@@ -10,18 +11,23 @@ dist
 .vercel
 
 .idea
+# !SECTION
 
+# SECTION .DOCKERIGNORE
 # Rules exclusive to .dockerignore
+# TODO Finish this part of the file
 # .git
 # .github
 # .vscode
 # doc
+
 # Ignore everything inside submodules
-# packages/stoat.js/*
-# !packages/stoat.js/.gitkeep
-# packages/client/assets*
-# !packages/client/assets
-# packages/solid-livekit-components*
-# !packages/solid-livekit-components
-# packages/js-lingui-solid*
-# !packages/js-lingui-solid
+packages/stoat.js/*
+!packages/stoat.js/
+packages/client/assets/*
+!packages/client/assets
+packages/solid-livekit-components/*
+!packages/solid-livekit-components
+packages/js-lingui-solid/*
+!packages/js-lingui-solid
+# !SECTION
