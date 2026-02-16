@@ -19,6 +19,7 @@ import MdBlock from "@material-design-icons/svg/outlined/block.svg?component-sol
 import MdCancel from "@material-design-icons/svg/outlined/cancel.svg?component-solid";
 import MdChat from "@material-design-icons/svg/outlined/chat.svg?component-solid";
 import MdClose from "@material-design-icons/svg/outlined/close.svg?component-solid";
+import MdCopy from "@material-design-icons/svg/outlined/content_copy.svg?component-solid";
 import MdDoNotDisturbOn from "@material-design-icons/svg/outlined/do_not_disturb_on.svg?component-solid";
 import MdFace from "@material-design-icons/svg/outlined/face.svg?component-solid";
 import MdMicOff from "@material-design-icons/svg/outlined/mic_off.svg?component-solid";
@@ -187,6 +188,15 @@ export function UserContextMenu(props: {
    */
   function copyId() {
     navigator.clipboard.writeText(props.user.id);
+  }
+
+  /**
+   * Copy username to clipboard
+   */
+  function copyUsername() {
+    navigator.clipboard.writeText(
+      `${props.user.username}#${props.user.discriminator}`,
+    );
   }
 
   return (
@@ -386,6 +396,10 @@ export function UserContextMenu(props: {
           </ContextMenuButton>
         </Show>
       </Show>
+
+      <ContextMenuButton icon={MdCopy} onClick={copyUsername}>
+        <Trans>Copy Username</Trans>
+      </ContextMenuButton>
 
       <Show
         when={
