@@ -784,6 +784,10 @@ msgstr ""
 msgid "Copy user ID"
 msgstr "C0PY U532 1D"
 
+#: components/app/menus/UserContextMenu.tsx
+msgid "Copy Username"
+msgstr ""
+
 #: components/app/interface/settings/channel/webhooks/ViewWebhook.tsx
 msgid "Copy webhook URL"
 msgstr ""
