@@ -61,7 +61,7 @@ function VariantLive(props: { fallback?: JSX.Element }) {
  */
 function VariantPreview(props: { channel: Channel }) {
   const participants = () => [...props.channel.voiceParticipants.values()];
-  
+
   return (
     <Base>
       <For each={participants()}>

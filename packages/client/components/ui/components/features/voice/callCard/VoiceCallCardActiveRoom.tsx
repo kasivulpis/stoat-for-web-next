@@ -25,7 +25,6 @@ import { Symbol } from "@revolt/ui/components/utils/Symbol";
 
 import { VoiceStatefulUserIcons } from "../VoiceStatefulUserIcons";
 
-import { VoiceCallCardActions } from "./VoiceCallCardActions";
 import { VoiceCallCardStatus } from "./VoiceCallCardStatus";
 
 /**
@@ -180,7 +179,13 @@ function UserTile() {
       >
         <Match when={isTrackReference(track)}>
           <VideoTrack
-            style={{ "grid-area": "1/1", "object-fit": "cover", width: "100%", height: "100%", "border-radius": "inherit" }}
+            style={{
+              "grid-area": "1/1",
+              "object-fit": "cover",
+              width: "100%",
+              height: "100%",
+              "border-radius": "inherit",
+            }}
             trackRef={track as TrackReference}
             manageSubscription={true}
           />
@@ -236,9 +241,19 @@ function ScreenshareTile() {
   };
 
   return (
-    <div ref={videoRef} class={tile() + " group"} onClick={toggleFullscreen} style={{ cursor: "pointer" }}>
+    <div
+      ref={videoRef}
+      class={tile() + " group"}
+      onClick={toggleFullscreen}
+      style={{ cursor: "pointer" }}
+    >
       <VideoTrack
-        style={{ "grid-area": "1/1", "object-fit": "contain", width: "100%", height: "100%" }}
+        style={{
+          "grid-area": "1/1",
+          "object-fit": "contain",
+          width: "100%",
+          height: "100%",
+        }}
         trackRef={track as TrackReference}
         manageSubscription={true}
       />

@@ -27,7 +27,9 @@ export function PersistentVoiceControls() {
           />
           <UserDetails>
             <Username>{client().user!.displayName}</Username>
-            <ChannelName>{voice.channel()?.name || "Voice Channel"}</ChannelName>
+            <ChannelName>
+              {voice.channel()?.name || "Voice Channel"}
+            </ChannelName>
           </UserDetails>
         </UserInfo>
 
@@ -56,7 +58,9 @@ export function PersistentVoiceControls() {
 
           <IconButton
             size="sm"
-            variant={voice.deafen() || !voice.listenPermission ? "tonal" : "filled"}
+            variant={
+              voice.deafen() || !voice.listenPermission ? "tonal" : "filled"
+            }
             onPress={() => voice.toggleDeafen()}
             use:floating={{
               tooltip: voice.listenPermission

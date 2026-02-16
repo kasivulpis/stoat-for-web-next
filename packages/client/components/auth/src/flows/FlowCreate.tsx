@@ -6,20 +6,18 @@ import { Button, Row, iconSize } from "@revolt/ui";
 
 import MdArrowBack from "@material-design-icons/svg/filled/arrow_back.svg?component-solid";
 
+import { API } from "stoat.js";
 import { useApi } from "../../../client";
-import { API } from 'stoat.js';
 
 import { FlowTitle } from "./Flow";
 import { setFlowCheckEmail } from "./FlowCheck";
 import { Field, Fields, Form } from "./Form";
 
-const finalFields : Field[] = CONFIGURATION.INVITE_ONLY 
+const finalFields: Field[] = CONFIGURATION.INVITE_ONLY
   ? ["email", "password", "invite"]
   : ["email", "password"];
 
-const navigateOnSuccess = CONFIGURATION.INVITE_ONLY
-  ? "/login"
-  : "/login/check";
+const navigateOnSuccess = CONFIGURATION.INVITE_ONLY ? "/login" : "/login/check";
 
 /**
  * Flow for creating a new account
@@ -36,12 +34,12 @@ export default function FlowCreate() {
     const email = data.get("email") as string;
     const password = data.get("password") as string;
     const captcha = data.get("captcha") as string;
-    const body : API.DataCreateAccount = { email, password, captcha };
+    const body: API.DataCreateAccount = { email, password, captcha };
 
     if (CONFIGURATION.INVITE_ONLY) {
       body.invite = data.get("invite") as string;
     }
-  
+
     await api.post("/auth/account/create", body);
 
     // FIXME: should tell client if email was sent
