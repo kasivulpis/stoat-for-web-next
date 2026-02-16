@@ -9,7 +9,13 @@ import { Checkbox2, Column, Text, TextField } from "@revolt/ui";
 /**
  * Available field types
  */
-export type Field = "email" | "password" | "new-password" | "log-out" | "username" | "invite";
+export type Field =
+  | "email"
+  | "password"
+  | "new-password"
+  | "log-out"
+  | "username"
+  | "invite";
 
 /**
  * Properties to apply to fields
