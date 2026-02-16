@@ -1217,6 +1217,10 @@ msgid "Enter your current password..."
 msgstr ""
 
 #: components/auth/src/flows/Form.tsx
+msgid "Enter your invite code."
+msgstr ""
+
+#: components/auth/src/flows/Form.tsx
 msgid "Enter your preferred username."
 msgstr "Εισήγαγε το όνομα χρήστη σου."
 
@@ -1448,6 +1452,7 @@ msgstr "Προσκάλεσε όλους σου τους φίλους, μερικ
 msgid "Invite Bot"
 msgstr ""
 
+#: components/auth/src/flows/Form.tsx
 #: components/app/interface/settings/server/invites/ListServerInvites.tsx
 msgid "Invite Code"
 msgstr "Κωδικός Πρόσκλησης"

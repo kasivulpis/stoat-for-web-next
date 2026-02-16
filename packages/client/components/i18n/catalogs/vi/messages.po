@@ -1217,6 +1217,10 @@ msgid "Enter your current password..."
 msgstr ""
 
 #: components/auth/src/flows/Form.tsx
+msgid "Enter your invite code."
+msgstr ""
+
+#: components/auth/src/flows/Form.tsx
 msgid "Enter your preferred username."
 msgstr "Nhập tên người dùng của bạn."
 
@@ -1448,6 +1452,7 @@ msgstr "Mời tất cả các bạn của bạn, những bot thật ngầu và b
 msgid "Invite Bot"
 msgstr ""
 
+#: components/auth/src/flows/Form.tsx
 #: components/app/interface/settings/server/invites/ListServerInvites.tsx
 msgid "Invite Code"
 msgstr "Mã Dùng Để Mời"
