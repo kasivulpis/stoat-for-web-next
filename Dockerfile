@@ -1,5 +1,5 @@
 # SECTION BUILD STAGE
-FROM debian:stable-slim as BUILD
+FROM node:25-slim as BUILD
 
 # ANCHOR BUILD ENVS
 ARG BASE_PATH=/
