@@ -25,7 +25,6 @@ import { Symbol } from "@revolt/ui/components/utils/Symbol";
 
 import { VoiceStatefulUserIcons } from "../VoiceStatefulUserIcons";
 
-import { VoiceCallCardActions } from "./VoiceCallCardActions";
 import { VoiceCallCardStatus } from "./VoiceCallCardStatus";
 
 /**
@@ -41,7 +40,8 @@ export function VoiceCallCardActiveRoom() {
       </Call>
 
       <VoiceCallCardStatus />
-      <VoiceCallCardActions size="sm" />
+      {/* Voice controls moved to sidebar - Discord-like UI */}
+      {/* <VoiceCallCardActions size="sm" /> */}
     </View>
   );
 }
@@ -64,7 +64,7 @@ const Call = styled("div", {
   base: {
     flexGrow: 1,
     minHeight: 0,
-    overflowY: "scroll",
+    overflow: "hidden",
   },
 });
 
@@ -94,10 +94,14 @@ function Participants() {
 
 const Grid = styled("div", {
   base: {
-    display: "grid",
+    height: "100%",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignContent: "center",
     gap: "var(--gap-md)",
     padding: "var(--gap-md)",
-    gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+    overflow: "hidden",
   },
 });
 
@@ -132,11 +136,25 @@ function UserTile() {
 
   const user = useUser(participant.identity);
 
+  let videoRef: HTMLDivElement | undefined;
+
+  const toggleFullscreen = () => {
+    if (!videoRef) return;
+    if (!document.fullscreenElement) {
+      videoRef.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
   return (
     <div
+      ref={videoRef}
       class={tile({
         speaking: isSpeaking(),
       })}
+      onClick={toggleFullscreen}
+      style={{ cursor: "pointer" }}
       use:floating={{
         userCard: {
           user: user().user!,
@@ -161,7 +179,13 @@ function UserTile() {
       >
         <Match when={isTrackReference(track)}>
           <VideoTrack
-            style={{ "grid-area": "1/1" }}
+            style={{
+              "grid-area": "1/1",
+              "object-fit": "cover",
+              width: "100%",
+              height: "100%",
+              "border-radius": "inherit",
+            }}
             trackRef={track as TrackReference}
             manageSubscription={true}
           />
@@ -175,6 +199,9 @@ function UserTile() {
             userId={participant.identity}
             muted={isMuted()}
           />
+          <Show when={isTrackReference(track)}>
+            <Symbol size={18}>fullscreen</Symbol>
+          </Show>
         </OverlayInner>
       </Overlay>
     </div>
@@ -202,10 +229,31 @@ function ScreenshareTile() {
     source: Track.Source.ScreenShareAudio,
   });
 
+  let videoRef: HTMLDivElement | undefined;
+
+  const toggleFullscreen = () => {
+    if (!videoRef) return;
+    if (!document.fullscreenElement) {
+      videoRef.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
   return (
-    <div class={tile() + " group"}>
+    <div
+      ref={videoRef}
+      class={tile() + " group"}
+      onClick={toggleFullscreen}
+      style={{ cursor: "pointer" }}
+    >
       <VideoTrack
-        style={{ "grid-area": "1/1" }}
+        style={{
+          "grid-area": "1/1",
+          "object-fit": "contain",
+          width: "100%",
+          height: "100%",
+        }}
         trackRef={track as TrackReference}
         manageSubscription={true}
       />
@@ -216,6 +264,7 @@ function ScreenshareTile() {
           <Show when={isMuted()}>
             <Symbol size={18}>no_sound</Symbol>
           </Show>
+          <Symbol size={18}>fullscreen</Symbol>
         </OverlayInner>
       </Overlay>
     </div>
@@ -224,8 +273,13 @@ function ScreenshareTile() {
 
 const tile = cva({
   base: {
+    flex: "1 1 240px",
+    maxWidth: "100%",
+    height: "100%",
+    minHeight: 0,
     display: "grid",
-    aspectRatio: "16/9",
+    gridTemplateRows: "minmax(0, 1fr)",
+    gridTemplateColumns: "minmax(0, 1fr)",
     transition: ".3s ease all",
     borderRadius: "var(--borderRadius-lg)",
 
@@ -251,6 +305,7 @@ const Overlay = styled("div", {
   base: {
     minWidth: 0,
     gridArea: "1/1",
+    zIndex: 1,
 
     padding: "var(--gap-md) var(--gap-lg)",
 

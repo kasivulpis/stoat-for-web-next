@@ -784,6 +784,10 @@ msgstr ""
 msgid "Copy user ID"
 msgstr "Copia ID dell'utente"
 
+#: components/app/menus/UserContextMenu.tsx
+msgid "Copy Username"
+msgstr ""
+
 #: components/app/interface/settings/channel/webhooks/ViewWebhook.tsx
 msgid "Copy webhook URL"
 msgstr ""
@@ -1217,6 +1221,10 @@ msgid "Enter your current password..."
 msgstr ""
 
 #: components/auth/src/flows/Form.tsx
+msgid "Enter your invite code."
+msgstr ""
+
+#: components/auth/src/flows/Form.tsx
 msgid "Enter your preferred username."
 msgstr "Inserisci il nome utente che preferisci."
 
@@ -1448,6 +1456,7 @@ msgstr "Invita tutti i tuoi amici, qualche bot interessante, e fai partire una g
 msgid "Invite Bot"
 msgstr ""
 
+#: components/auth/src/flows/Form.tsx
 #: components/app/interface/settings/server/invites/ListServerInvites.tsx
 msgid "Invite Code"
 msgstr "Codice d'invito"
