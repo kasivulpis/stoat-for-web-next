@@ -5,19 +5,21 @@ FROM node:25-slim as BUILD
 ARG BASE_PATH=/
 ENV BASE_PATH=${BASE_PATH}
 ENV PROD="true"
-# TODO Set the following ENVs (?):
-# NOTE We are NOT going to be injecting variables. No.
+# TODO Set ALL the following ENVs (?):
+# NOTE Fiiiiiiiiine we'll inject variables for now... T-T
 # ENV VITE_SENTRY_DSN=""
 # ENV VITE_SENTRY_TUNNEL=""
-# ENV VITE_API_URL=""
-# ENV VITE_WS_URL=""
-# ENV VITE_MEDIA_URL=""
-# ENV VITE_PROXY_URL=""
-# ENV VITE_HCAPTCHA_SITEKEY=""
+ENV VITE_INVITE_ONLY=__VITE_INVITE_ONLY__
+ENV VITE_API_URL=__VITE_API_URL__
+ENV VITE_WS_URL=__VITE_WS_URL__
+ENV VITE_MEDIA_URL=__VITE_MEDIA_URL__
+ENV VITE_PROXY_URL=__VITE_PROXY_URL__
+ENV VITE_HCAPTCHA_SITEKEY=__VITE_HCAPTCHA_SITEKEY__
 # ENV VITE_CFG_MAX_REPLIES=""
 # ENV VITE_CFG_MAX_ATTACHMENTS=""
 # ENV VITE_CFG_MAX_EMOJI=""
-# ENV VITE_CFG_MAX_FILE_SIZE=""
+ENV VITE_CFG_MAX_FILE_SIZE=__VITE_CFG_MAX_FILE_SIZE__
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 WORKDIR /app
 COPY . .
@@ -37,9 +39,21 @@ RUN mise build
 # !SECTION
 
 # SECTION FINAL STAGE
+# ANCHOR CADDY
 FROM caddy:latest as FINAL
 COPY --from=BUILD /app/packages/client/dist /usr/share/caddy
+RUN printf "%s\n" \
+  ":80 {" \
+  "  root * /srv" \
+  "  try_files {path} /index.html" \
+  "  file_server" \
+  "}" \
+  > /etc/caddy/Caddyfile
+# ANCHOR ENV INJECTION
+COPY entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 # !SECTION
 
 # ANCHOR EXPOSE & PROD ENVS
 EXPOSE 5000
+ENTRYPOINT ["/docker-entrypoint.sh"]
