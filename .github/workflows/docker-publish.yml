@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+      - dev
+    tags:
+      - '*'
   workflow_dispatch:
 
 permissions:
@@ -27,9 +30,6 @@ jobs:
           - runner: ubuntu-latest
             platform: linux/amd64
             arch: amd64
-          - runner: ubuntu-24.04-arm
-            platform: linux/arm64
-            arch: arm64
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout
@@ -94,8 +94,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Determine image tag
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "branch" ]]; then
+            if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+              echo "IMAGE_TAG=latest" >> $GITHUB_ENV
+            elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
+              echo "IMAGE_TAG=dev" >> $GITHUB_ENV
+            else
+              echo "IMAGE_TAG=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+            fi
+          elif [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            echo "IMAGE_TAG=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+          fi
+
       - name: Create manifest and push
         working-directory: /tmp/digests
         run: |
-          docker buildx imagetools create -t ${{ env.REGISTRY }}:latest \
+          docker buildx imagetools create -t ${{ env.REGISTRY }}:${{ env.IMAGE_TAG }} \
             $(printf '${{ env.REGISTRY }}@sha256:%s ' *)

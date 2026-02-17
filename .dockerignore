@@ -15,13 +15,10 @@ dist
 
 # SECTION .DOCKERIGNORE
 # Rules exclusive to .dockerignore
-# TODO Finish this part of the file
-# .git
-# .github
-# .vscode
-# doc
-
-# Ignore everything inside submodules
+.github
+.vscode
+doc
+# Ignore everything inside submodules, but not the folders themselves.
 packages/stoat.js/*
 !packages/stoat.js/
 packages/client/assets/*
